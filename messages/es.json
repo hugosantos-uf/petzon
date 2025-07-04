@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "title": "¡Adopta, no compres!",
+    "subtitle": "Encuentra a tu nuevo mejor amigo hoy"
+  },
+  "cta": {
+    "title": "¿Listo para cambiar una vida?",
+    "button": "Ver mascotas disponibles"
+  },
+  "benefits": {
+    "title": "Tú garantizas...",
+    "safeAdoption": {
+      "title": "Adopción Segura",
+      "text": "Todas las mascotas están verificadas, vacunadas y listas para un nuevo hogar"
+    },
+    "support": {
+      "title": "Apoyo Post-Adopción",
+      "text": "Te ayudamos durante y después del proceso de adopción"
+    }
+  },
+  "gallery": {
+    "previewTitle": "Conoce a algunas de nuestras mascotas",
+    "catDescription": "Un gatito adorable que busca un hogar. Es juguetón, cariñoso y está listo para llenar tu casa de alegría y muchos ronroneos.",
+    "dogDescription": "Un compañero leal y lleno de energía. Le encantan los paseos, los juegos y está ansioso por encontrar una familia a la que llamar suya."
+  },
+  "nav": {
+    "home": "Inicio",
+    "login": "Iniciar sesión",
+    "about": "Sobre Nosotros",
+    "gallery": "Galería",
+    "cats": "Gatos",
+    "dogs": "Perros"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados"
+  },
+  "how": {
+    "title": "¿Cómo funciona?",
+    "title1": "Encuentra una mascota",
+    "desc1": "Busca mascotas disponibles cerca de ti.",
+    "title2": "Conecta y conoce",
+    "desc2": "Mira los detalles y habla con tutores u ONGs.",
+    "title3": "Adopta con amor",
+    "desc3": "Finaliza la adopción y recibe a un nuevo miembro en tu familia."
+  },
+  "auth": {
+    "loginTab": "Iniciar sesión",
+    "registerTab": "Registrarse",
+    "name": "Nombre",
+    "email": "Correo",
+    "password": "Contraseña",
+    "loginBtn": "Iniciar sesión",
+    "registerBtn": "Crear cuenta",
+    "submittingLogin": "Iniciando sesión...",
+    "submittingRegister": "Registrando...",
+    "errorNameRequired": "Nombre es obligatorio",
+    "errorEmailRequired": "Correo es obligatorio",
+    "errorEmailInvalid": "Dirección de correo inválida",
+    "errorPasswordRequired": "Contraseña es obligatoria",
+    "errorPasswordMinLength": "Contraseña debe tener al menos 6 caracteres"
+  },
+  "aboutPage": {
+    "title": "Sobre Petzon",
+    "missionTitle": "Nuestra Misión",
+    "missionText": "En Petzon, nuestra misión es conectar corazones y hogares. Creemos que cada mascota merece una segunda oportunidad y un hogar amoroso. Nuestra plataforma facilita la adopción responsable, uniendo a mascotas necesitadas con personas dispuestas a ofrecer cuidado, cariño y una familia para toda la vida.",
+    "visionTitle": "Nuestra Visión",
+    "visionText": "Soñamos con un mundo donde todas las mascotas sean amadas, respetadas y tengan un hogar seguro. Queremos ser el puente que transforma la vida de las mascotas y las personas, promoviendo la conciencia sobre la importancia de la adopción y el bienestar animal.",
+    "creatorsTitle": "Quiénes Somos",
+    "creatorsText": "Petzon fue concebido y desarrollado con pasión por Lucas Gabryel y Hugo Santos, dos entusiastas de la tecnología y amantes de los animales, dedicados a marcar la diferencia en la vida de las mascotas.",
+    "getInvolvedTitle": "¡Participa!",
+    "getInvolvedText": "Si estás buscando un nuevo miembro para la familia o quieres ayudar a una mascota necesitada, estás en el lugar correcto. Explora nuestra galería, conoce a nuestros adorables candidatos y prepárate para que tu vida sea transformada por el amor incondicional de una mascota."
+  },
+  "testimonials": {
+    "title": "Historias que Calientan el Corazón",
+    "testimonial1": {
+      "quote": "Encontrar a Tobby en Petzon fue lo mejor que nos ha pasado. El proceso fue simple y transparente. ¡Hoy, nuestro hogar es mucho más feliz con él!",
+      "name": "Ana y Juan",
+      "pet": "Tobby, el Perrito"
+    },
+    "testimonial2": {
+      "quote": "Tenía dudas sobre adoptar en línea, pero Petzon lo hizo todo seguro. Adopté a Luna hace 3 meses y es la gatita más cariñosa del mundo. ¡Se lo recomiendo a todo el mundo!",
+      "name": "Mariana Silva",
+      "pet": "Luna, la Gatita"
+    }
+  }
+}

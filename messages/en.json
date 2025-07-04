@@ -1,0 +1,86 @@
+{
+  "hero": {
+    "title": "Adopt, don't shop!",
+    "subtitle": "Find your new best friend today"
+  },
+  "cta": {
+    "title": "Ready to change a life?",
+    "button": "View available pets"
+  },
+  "benefits": {
+    "title": "You guarantee...",
+    "safeAdoption": {
+      "title": "Safe Adoption",
+      "text": "All pets are verified, vaccinated, and ready for a new home"
+    },
+    "support": {
+      "title": "Post-Adoption Support",
+      "text": "We help you throughout and after the adoption process"
+    }
+  },
+  "gallery": {
+    "previewTitle": "Meet some of our pets",
+    "catDescription": "An adorable kitten looking for a home. It's playful, affectionate, and ready to fill your house with joy and lots of purrs.",
+    "dogDescription": "A loyal and energetic companion. Loves walks, playing, and is eager to find a family to call its own."
+  },
+  "nav": {
+    "home": "Home",
+    "login": "Login",
+    "about": "About",
+    "gallery": "Gallery",
+    "cats": "Cats",
+    "dogs": "Dogs"
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  },
+  "how": {
+    "title": "How it works?",
+    "title1": "Find a pet",
+    "desc1": "Search for available pets near you.",
+    "title2": "Connect and meet",
+    "desc2": "View details and talk to caregivers or shelters.",
+    "title3": "Adopt with love",
+    "desc3": "Complete the adoption and welcome a new family member!"
+  },
+  "auth": {
+    "loginTab": "Login",
+    "registerTab": "Sign Up",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "loginBtn": "Login",
+    "registerBtn": "Create Account",
+    "submittingLogin": "Logging in...",
+    "submittingRegister": "Signing up...",
+    "errorNameRequired": "Name is required",
+    "errorEmailRequired": "Email is required",
+    "errorEmailInvalid": "Invalid email address",
+    "errorPasswordRequired": "Password is required",
+    "errorPasswordMinLength": "Password must be at least 6 characters"
+  },
+  "aboutPage": {
+    "title": "About Petzon",
+    "missionTitle": "Our Mission",
+    "missionText": "At Petzon, our mission is to connect hearts and homes. We believe that every pet deserves a second chance and a loving home. Our platform facilitates responsible adoption, uniting pets in need with people willing to offer care, affection, and a lifelong family.",
+    "visionTitle": "Our Vision",
+    "visionText": "We dream of a world where all pets are loved, respected, and have a safe home. We want to be the bridge that transforms the lives of pets and people, promoting awareness about the importance of adoption and animal welfare.",
+    "creatorsTitle": "Who We Are",
+    "creatorsText": "Petzon was conceived and passionately developed by Lucas Gabryel and Hugo Santos, two technology enthusiasts and animal lovers dedicated to making a difference in pets' lives.",
+    "getInvolvedTitle": "Get Involved!",
+    "getInvolvedText": "If you're looking for a new family member or want to help a pet in need, you're in the right place. Explore our gallery, meet our adorable candidates, and get ready to have your life transformed by the unconditional love of a pet."
+  },
+  "testimonials": {
+    "title": "Heartwarming Stories",
+    "testimonial1": {
+      "quote": "Finding Tobby on Petzon was the best thing that happened to us. The process was simple and transparent. Today, our home is so much happier with him!",
+      "name": "Ana & João",
+      "pet": "Tobby, the Dog"
+    },
+    "testimonial2": {
+      "quote": "I was hesitant to adopt online, but Petzon made everything secure. I adopted Luna 3 months ago, and she is the most affectionate cat in the world. I recommend it to everyone!",
+      "name": "Maria Silva",
+      "pet": "Luna, the Kitten"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "hero": {
+    "title": "Adote, não compre!",
+    "subtitle": "Encontre seu novo melhor amigo agora mesmo"
+  },
+  "cta": {
+    "title": "Pronto para mudar uma vida?",
+    "button": "Ver pets disponíveis"
+  },
+  "benefits": {
+    "title": "Você garante...",
+    "safeAdoption": {
+      "title": "Adoção Segura",
+      "text": "Todos os pets são verificados, vacinados e prontos para um novo lar"
+    },
+    "support": {
+      "title": "Apoio Pós-Adoção",
+      "text": "Ajudamos você durante e após o processo de adoção"
+    }
+  },
+  "gallery": {
+    "previewTitle": "Conheça alguns dos nossos pets",
+    "catDescription": "Um adorável gatinho procurando um lar. É brincalhão, carinhoso e está pronto para encher sua casa de alegria e muitos ronronares.",
+    "dogDescription": "Um companheiro leal e cheio de energia. Adora passeios, brincadeiras e está ansioso para encontrar uma família para chamar de sua."
+  },
+  "nav": {
+    "home": "Início",
+    "login": "Login",
+    "gallery": "Galeria",
+    "about": "Sobre",
+    "cats": "Gatos",
+    "dogs": "Cachorros"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados"
+  },
+
+  "how": {
+    "title": "Como funciona?",
+    "title1": "Encontre um pet",
+    "desc1": "Busque por pets disponíveis próximos a você.",
+    "title2": "Conheça e conecte",
+    "desc2": "Veja detalhes, converse com tutores ou ONGs.",
+    "title3": "Adote com amor",
+    "desc3": "Finalize a adoção e receba o novo membro da família!"
+  },
+  "auth": {
+    "loginTab": "Entrar",
+    "registerTab": "Registrar",
+    "name": "Nome",
+    "email": "E-mail",
+    "password": "Senha",
+    "loginBtn": "Entrar",
+    "registerBtn": "Criar conta",
+    "submittingLogin": "Entrando...",
+    "submittingRegister": "Registrando...",
+    "errorNameRequired": "Nome é obrigatório",
+    "errorEmailRequired": "E-mail é obrigatório",
+    "errorEmailInvalid": "Endereço de e-mail inválido",
+    "errorPasswordRequired": "Senha é obrigatória",
+    "errorPasswordMinLength": "Senha deve ter pelo menos 6 caracteres"
+  },
+  "aboutPage": {
+    "title": "Sobre o Petzon",
+    "missionTitle": "Nossa Missão",
+    "missionText": "No Petzon, nossa missão é conectar corações e lares. Acreditamos que cada animal de estimação merece uma segunda chance e um lar amoroso. Nossa plataforma facilita a adoção responsável, unindo pets que precisam de ajuda com pessoas dispostas a oferecer cuidado, carinho e uma família para toda a vida.",
+    "visionTitle": "Nossa Visão",
+    "visionText": "Sonhamos com um mundo onde todos os animais de estimação sejam amados, respeitados e tenham um lar seguro. Queremos ser a ponte que transforma a vida de pets e pessoas, promovendo a conscientização sobre a importância da adoção e do bem-estar animal.",
+    "creatorsTitle": "Quem Somos",
+    "creatorsText": "Petzon foi idealizado e desenvolvido com paixão por Lucas Gabryel e Hugo Santos, dois entusiastas da tecnologia e amantes dos animais, dedicados a fazer a diferença na vida dos pets.",
+    "getInvolvedTitle": "Faça Parte!",
+    "getInvolvedText": "Se você está procurando um novo membro para a família ou quer ajudar um pet necessitado, você está no lugar certo. Explore nossa galeria, conheça nossos adoráveis candidatos e prepare-se para ter sua vida transformada pelo amor incondicional de um pet."
+  },
+
+  "testimonials": {
+    "title": "Histórias que Aquecem o Coração",
+    "testimonial1": {
+      "quote": "Encontrar o Tobby no Petzon foi a melhor coisa que nos aconteceu. O processo foi simples e transparente. Hoje, nossa casa é muito mais feliz com ele!",
+      "name": "Ana e João",
+      "pet": "Tobby, o Cãozinho"
+    },
+    "testimonial2": {
+      "quote": "Eu tinha receio de adotar online, mas o Petzon tornou tudo seguro. Adotei a Luna há 3 meses e ela é a gatinha mais carinhosa do mundo. Recomendo a todos!",
+      "name": "Mariana Silva",
+      "pet": "Luna, a Gatinha"
+    }
+  }
+}
