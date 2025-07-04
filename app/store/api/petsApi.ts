@@ -148,19 +148,22 @@ export const petsApi = createApi({
             ]
           : [{ type: "Pet", id: "LIST" }],
     }),
-
-    getUsers: builder.query<Usuario[], void>({
+    getUsers: builder.query<Page<Usuario>, void>({
+      // <-- CORREÇÃO AQUI: Retorna Page<Usuario>
       query: () => "admin/usuarios",
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ idUsuario }) => ({
-                type: "Users" as const,
-                id: idUsuario,
-              })),
-              { type: "Users", id: "LIST" },
-            ]
-          : [{ type: "Users", id: "LIST" }],
+      providesTags: (result) => {
+        // A lógica de cache precisa acessar result.content
+        if (result && Array.isArray(result.content)) {
+          return [
+            ...result.content.map(({ idUsuario }) => ({
+              type: "Users" as const,
+              id: idUsuario,
+            })),
+            { type: "Users", id: "LIST" },
+          ];
+        }
+        return [{ type: "Users", id: "LIST" }];
+      },
     }),
 
     promoteToOng: builder.mutation<Usuario, number>({
