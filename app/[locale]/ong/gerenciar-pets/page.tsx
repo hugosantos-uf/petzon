@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import {
   useGetUsuarioLogadoQuery,
-  useGetPetsQuery,
+  useGetAllPetsQuery,
   useDeletePetMutation,
 } from "@/app/store/api/petsApi";
 import { useAppSelector } from "@/app/hooks/hooks";
@@ -21,7 +21,7 @@ export default function GerenciarPetsPage() {
   const { data: usuarioLogado, isLoading: isLoadingUser } =
     useGetUsuarioLogadoQuery(undefined, { skip: !isAuthenticated });
 
-  const { data: petsData, isLoading: isLoadingPets } = useGetPetsQuery({
+  const { data: petsData, isLoading: isLoadingPets } = useGetAllPetsQuery({
     page: 0,
     size: 100,
   });

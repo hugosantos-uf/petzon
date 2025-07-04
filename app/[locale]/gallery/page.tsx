@@ -3,62 +3,66 @@
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import MultiActionAreaCard from "../../components/multiActionAreaCard/MultiActionAreaCard";
-import { useGetPetsQuery } from "@/app/store/api/petsApi";
+import {
+  useGetAllPetsQuery,
+  useGetPetsByTypeQuery,
+} from "@/app/store/api/petsApi"; // Importa os dois novos hooks
 import type { Pet } from "@/app/store/api/petsApi";
 
-type PetType = "gato" | "cachorro";
+// Define um tipo para o filtro, incluindo a opção 'todos'
+type PetFilterType = "GATO" | "CACHORRO" | "todos";
 
 export default function Gallery() {
   const t = useTranslations("gallery");
   const navT = useTranslations("nav");
-  const [selectedPetType, setSelectedPetType] = useState<PetType>("gato");
+  const [filter, setFilter] = useState<PetFilterType>("todos"); // Estado inicial para mostrar todos
   const [page, setPage] = useState(0);
 
-  const { data, error, isLoading } = useGetPetsQuery({
-    tipo: selectedPetType,
-    page: page,
-    size: 8,
-  });
+  // Hook para buscar todos os pets. Só é ativado se o filtro for 'todos'.
+  const {
+    data: allPetsData,
+    error: allPetsError,
+    isLoading: isLoadingAllPets,
+  } = useGetAllPetsQuery({ page, size: 8 }, { skip: filter !== "todos" });
+
+  // Hook para buscar pets por tipo. Só é ativado se o filtro for 'gato' ou 'cachorro'.
+  const {
+    data: petsByTypeData,
+    error: petsByTypeError,
+    isLoading: isLoadingPetsByType,
+  } = useGetPetsByTypeQuery(
+    { tipo: filter, page, size: 8 },
+    { skip: filter === "todos" }
+  );
+
+  // Determina qual conjunto de dados e estado de loading usar
+  const isLoading = filter === "todos" ? isLoadingAllPets : isLoadingPetsByType;
+  const error = filter === "todos" ? allPetsError : petsByTypeError;
+  const data = filter === "todos" ? allPetsData : petsByTypeData;
 
   const pets = data?.content;
   const totalPages = data?.totalPages || 0;
 
-  const handlePreviousPage = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 0));
+  const handleFilterChange = (newFilter: PetFilterType) => {
+    setFilter(newFilter);
+    setPage(0); // Reseta a página ao mudar o filtro
   };
 
-  const handleNextPage = () => {
-    setPage((prevPage) =>
-      prevPage + 1 < totalPages ? prevPage + 1 : prevPage
-    );
-  };
-
-  const baseButtonClass =
-    "px-4 py-2 rounded-md font-semibold transition-colors duration-150 ease-in-out text-sm sm:text-base shadow-sm";
-  const activeButtonClass = "bg-purple-700 text-white hover:bg-purple-800";
-  const inactiveButtonClass =
-    "bg-white text-purple-700 border border-purple-700 hover:bg-purple-100";
+  const handlePreviousPage = () => setPage((p) => Math.max(p - 1, 0));
+  const handleNextPage = () => setPage((p) => (p + 1 < totalPages ? p + 1 : p));
 
   const renderPetCards = () => {
     if (!pets || pets.length === 0) {
       return (
-        <div className="w-full flex justify-center mt-4">
-          <div
-            className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative w-full sm:w-auto text-center"
-            role="alert"
-          >
-            Nenhum {selectedPetType === "gato" ? "gatinho" : "cachorrinho"}{" "}
-            encontrado no momento.
-          </div>
+        <div className="col-span-full text-center p-4">
+          Nenhum pet encontrado.
         </div>
       );
     }
 
     return pets.map((pet: Pet) => {
-      const imageUrl = pet.urlFoto;
-
+      const imageUrl = pet.urlFoto; // URL completa do S3
       const detailLink = `/gallery/${pet.tipo.toLowerCase()}/${pet.id}`;
-
       return (
         <div key={pet.id} className="flex justify-center">
           <MultiActionAreaCard
@@ -74,6 +78,12 @@ export default function Gallery() {
     });
   };
 
+  const baseButtonClass =
+    "px-4 py-2 rounded-md font-semibold transition-colors duration-150 ease-in-out text-sm sm:text-base shadow-sm";
+  const activeButtonClass = "bg-purple-700 text-white hover:bg-purple-800";
+  const inactiveButtonClass =
+    "bg-white text-purple-700 border border-purple-700 hover:bg-purple-100";
+
   return (
     <main className="flex-1 bg-purple-50 py-8 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
@@ -83,27 +93,25 @@ export default function Gallery() {
           </h1>
           <div className="flex flex-col sm:flex-row sm:gap-2 mt-4 sm:mt-0 w-full sm:w-auto">
             <button
-              onClick={() => {
-                setSelectedPetType("gato");
-                setPage(0);
-              }}
+              onClick={() => handleFilterChange("todos")}
               className={`${baseButtonClass} ${
-                selectedPetType === "gato"
-                  ? activeButtonClass
-                  : inactiveButtonClass
+                filter === "todos" ? activeButtonClass : inactiveButtonClass
+              } w-full sm:w-auto mb-2 sm:mb-0`}
+            >
+              Todos
+            </button>
+            <button
+              onClick={() => handleFilterChange("GATO")}
+              className={`${baseButtonClass} ${
+                filter === "GATO" ? activeButtonClass : inactiveButtonClass
               } w-full sm:w-auto mb-2 sm:mb-0`}
             >
               {navT("cats")}
             </button>
             <button
-              onClick={() => {
-                setSelectedPetType("cachorro");
-                setPage(0);
-              }}
+              onClick={() => handleFilterChange("CACHORRO")}
               className={`${baseButtonClass} ${
-                selectedPetType === "cachorro"
-                  ? activeButtonClass
-                  : inactiveButtonClass
+                filter === "CACHORRO" ? activeButtonClass : inactiveButtonClass
               } w-full sm:w-auto`}
             >
               {navT("dogs")}
@@ -119,26 +127,25 @@ export default function Gallery() {
         {error && (
           <div className="w-full flex justify-center">
             <div
-              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative w-full sm:w-auto text-center"
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center"
               role="alert"
             >
-              Falha ao buscar os pets. Verifique se o backend está rodando.
+              Falha ao buscar os pets. Tente novamente.
             </div>
           </div>
         )}
-
         {!isLoading && !error && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {renderPetCards()}
             </div>
 
-            {data && data.totalPages > 1 && (
+            {totalPages > 1 && (
               <div className="flex justify-center items-center mt-10 gap-4">
                 <button
                   onClick={handlePreviousPage}
                   disabled={page === 0}
-                  className="px-4 py-2 bg-purple-700 text-white rounded-md transition hover:bg-purple-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-purple-700 text-white rounded-md disabled:bg-gray-400"
                 >
                   Anterior
                 </button>
@@ -148,7 +155,7 @@ export default function Gallery() {
                 <button
                   onClick={handleNextPage}
                   disabled={page + 1 >= totalPages}
-                  className="px-4 py-2 bg-purple-700 text-white rounded-md transition hover:bg-purple-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-purple-700 text-white rounded-md disabled:bg-gray-400"
                 >
                   Próxima
                 </button>

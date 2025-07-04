@@ -127,20 +127,38 @@ export const petsApi = createApi({
       providesTags: ["ChatConversations"],
     }),
 
-    getPets: builder.query<
+    getAllPets: builder.query<Page<Pet>, { page: number; size: number }>({
+      query: ({ page, size }) => {
+        const params = new URLSearchParams({
+          page: String(page),
+          size: String(size),
+        });
+        return `pets?${params.toString()}`;
+      },
+      // A lógica de cache para a lista geral
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.content.map(({ id }) => ({ type: "Pet" as const, id })),
+              { type: "Pet", id: "LIST" },
+            ]
+          : [{ type: "Pet", id: "LIST" }],
+    }),
+
+    // NOVO ENDPOINT para listar pets FILTRADOS POR TIPO e de forma paginada
+    getPetsByType: builder.query<
       Page<Pet>,
-      { tipo?: string; page: number; size: number }
+      { tipo: string; page: number; size: number }
     >({
       query: ({ tipo, page, size }) => {
         const params = new URLSearchParams({
           page: String(page),
           size: String(size),
         });
-        if (tipo) {
-          params.append("tipo", tipo);
-        }
-        return `pets?${params.toString()}`;
+        // A URL agora é construída com o novo formato
+        return `pets/tipo?tipo=${tipo}&${params.toString()}`;
       },
+      // A lógica de cache é a mesma, mas se aplicará a este endpoint específico
       providesTags: (result) =>
         result
           ? [
@@ -226,7 +244,8 @@ export const petsApi = createApi({
 export const {
   useLoginMutation,
   useRegisterMutation,
-  useGetPetsQuery,
+  useGetAllPetsQuery,
+  useGetPetsByTypeQuery,
   useGetPetByIdQuery,
   useGetUsuarioLogadoQuery,
   useGetChatHistoryQuery,
