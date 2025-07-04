@@ -75,6 +75,7 @@ export interface Usuario {
   nome: string;
   email: string;
   cargos: string[];
+  ativo: boolean;
 }
 
 export interface ConversationSummary {
@@ -174,6 +175,15 @@ export const petsApi = createApi({
       invalidatesTags: (_result, _error, id) => [{ type: "Users", id }],
     }),
 
+    deactivateUser: builder.mutation<Usuario, number>({
+      query: (userId) => ({
+        url: `admin/usuarios/${userId}`,
+        method: "DELETE",
+      }),
+      // Invalida a lista de usuários para atualizar a interface
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
+    }),
+
     getPetById: builder.query<Pet, string>({
       query: (id) => `pets/${id}`,
       providesTags: (_result, _error, id) => [{ type: "Pet", id }],
@@ -226,4 +236,5 @@ export const {
   useGetOngConversationsQuery,
   useGetUsersQuery,
   usePromoteToOngMutation,
+  useDeactivateUserMutation,
 } = petsApi;
