@@ -1,4 +1,4 @@
-import AuthPage from "@/app/components/AuthPage";
+import AuthPage from "@/app/components/features/auth/AuthPage";
 import { Metadata } from "next";
 import React from "react";
 

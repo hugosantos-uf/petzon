@@ -2,13 +2,13 @@
 
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Pet } from "@/app/store/api/petsApi";
+import { Pet } from "@/app/types/interfaces";
 import {
   useAddPetMutation,
   useUpdatePetMutation,
 } from "@/app/store/api/petsApi";
 import { FiX } from "react-icons/fi";
-import { PetCadastroDto } from "@/app/store/api/petsApi";
+import { PetCadastroDto } from "@/app/types/interfaces";
 
 interface PetFormInputs extends PetCadastroDto {
   imagem: FileList;

@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import {
-  useGetUsuarioLogadoQuery,
   useGetAllPetsQuery,
   useDeletePetMutation,
 } from "@/app/store/api/petsApi";
+import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
 import { useAppSelector } from "@/app/hooks/hooks";
 import { FiEdit, FiTrash2, FiPlusCircle } from "react-icons/fi";
-import { Pet } from "@/app/store/api/petsApi";
-import PetFormModal from "@/app/components/admin/PetFormModal";
+import { Pet } from "@/app/types/interfaces";
+import PetFormModal from "@/app/components/features/admin/PetFormModal";
 
 export default function GerenciarPetsPage() {
   const router = useRouter();

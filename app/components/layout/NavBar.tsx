@@ -4,11 +4,12 @@ import React, { useState, useRef, useEffect } from "react"; // Importamos useRef
 import Image from "next/image";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import LanguageSwitcher from "./languageSwitcher/LanguageSwitcher";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 import { FiMenu, FiX, FiLogOut, FiUser } from "react-icons/fi";
 import { useAppSelector, useAppDispatch } from "@/app/hooks/hooks";
-import { logout } from "./multiActionAreaCard/authSlice";
-import { useGetUsuarioLogadoQuery, petsApi } from "@/app/store/api/petsApi";
+import { logout } from "../features/pets/multiActionAreaCard/authSlice";
+import { petsApi } from "@/app/store/api/petsApi";
+import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);

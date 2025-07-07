@@ -1,7 +1,7 @@
 import React from "react";
-import HeroSection from "@/app/components/HeroSection";
-import HowItWorksSection from "@/app/components/HowItWorksSection";
-import TestimonialsSection from "@/app/components/TestimonialsSection";
+import HeroSection from "@/app/components/layout/HeroSection";
+import HowItWorksSection from "@/app/components/layout/HowItWorksSection";
+import TestimonialsSection from "@/app/components/layout/TestimonialsSection";
 
 export default function HomePage() {
   return (

@@ -2,8 +2,8 @@
 
 import { Provider } from "react-redux";
 import { store } from "../store/store";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
+import NavBar from "../components/layout/NavBar";
+import Footer from "../components/layout/Footer";
 
 export default function ClientLayout({
   children,

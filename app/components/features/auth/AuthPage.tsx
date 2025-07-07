@@ -2,9 +2,9 @@
 import { useTranslations } from "next-intl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import { useLoginMutation, useRegisterMutation } from "@/app/store/api/petsApi";
+import { useLoginMutation, useRegisterMutation } from "@/app/store/api/authApi";
 import { useAppDispatch } from "@/app/hooks/hooks";
-import { setCredentials } from "./multiActionAreaCard/authSlice";
+import { setCredentials } from "../pets/multiActionAreaCard/authSlice";
 import { useRouter } from "@/i18n/navigation";
 
 interface LoginFormInputs {

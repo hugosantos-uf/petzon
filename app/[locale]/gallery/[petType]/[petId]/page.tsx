@@ -2,13 +2,11 @@
 
 import React, { useState } from "react";
 import { useParams } from "next/navigation";
-import {
-  useGetPetByIdQuery,
-  useGetUsuarioLogadoQuery,
-} from "@/app/store/api/petsApi";
+import { useGetPetByIdQuery } from "@/app/store/api/petsApi";
+import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
 import Image from "next/image";
 import { useAppSelector } from "@/app/hooks/hooks";
-import PrivateChatWindow from "@/app/components/chat/PrivateChatWindow";
+import PrivateChatWindow from "@/app/components/features/chat/PrivateChatWindow";
 import { FiMessageSquare } from "react-icons/fi";
 
 export default function PetDetailPage() {

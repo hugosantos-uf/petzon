@@ -4,11 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { Client, IMessage } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useAppSelector } from "@/app/hooks/hooks";
-import {
-  useGetUsuarioLogadoQuery,
-  useGetChatHistoryQuery,
-} from "@/app/store/api/petsApi";
-import type { ChatMessage } from "@/app/store/api/petsApi";
+import { useGetChatHistoryQuery } from "@/app/store/api/ongApi";
+import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
+import type { ChatMessage } from "@/app/types/interfaces";
 import { FiX, FiSend } from "react-icons/fi";
 
 interface PrivateChatWindowProps {

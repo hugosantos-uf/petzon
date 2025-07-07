@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import MultiActionAreaCard from "../../components/multiActionAreaCard/MultiActionAreaCard";
+import MultiActionAreaCard from "../../components/features/pets/multiActionAreaCard/MultiActionAreaCard";
 import {
   useGetAllPetsQuery,
   useGetPetsByTypeQuery,
 } from "@/app/store/api/petsApi"; // Importa os dois novos hooks
-import type { Pet } from "@/app/store/api/petsApi";
+import type { Pet } from "@/app/types/interfaces";
 
 // Define um tipo para o filtro, incluindo a opção 'todos'
 type PetFilterType = "GATO" | "CACHORRO" | "todos";

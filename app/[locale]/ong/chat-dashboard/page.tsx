@@ -2,13 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
-import {
-  useGetUsuarioLogadoQuery,
-  useGetOngConversationsQuery,
-} from "@/app/store/api/petsApi";
+import { useGetOngConversationsQuery } from "@/app/store/api/ongApi";
+import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
 import { useAppSelector } from "@/app/hooks/hooks";
-import type { ConversationSummary } from "@/app/store/api/petsApi";
-import PrivateChatWindow from "@/app/components/chat/PrivateChatWindow";
+import type { ConversationSummary } from "@/app/types/interfaces";
+import PrivateChatWindow from "@/app/components/features/chat/PrivateChatWindow";
 
 const formatRelativeTime = (dateString: string) => {
   const date = new Date(dateString);

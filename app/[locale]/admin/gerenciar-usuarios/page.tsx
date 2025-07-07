@@ -3,11 +3,11 @@
 import React, { useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
 import {
-  useGetUsuarioLogadoQuery,
   useGetUsersQuery,
   usePromoteToOngMutation,
   useDeactivateUserMutation,
-} from "@/app/store/api/petsApi";
+} from "@/app/store/api/adminApi";
+import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
 import { useAppSelector } from "@/app/hooks/hooks";
 import { FiTrash2 } from "react-icons/fi";
 
