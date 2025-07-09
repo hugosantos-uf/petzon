@@ -78,7 +78,10 @@ export default function NavBar() {
 
       return (
         <div className="relative" ref={dropdownRef}>
-          <button onClick={() => setDropdownOpen((prev) => !prev)} /*...*/>
+          <button
+            onClick={() => setDropdownOpen((prev) => !prev)}
+            className="flex gap-1"
+          >
             <FiUser size={20} />
             <span className="font-medium">{usuarioLogado.nome}</span>
           </button>
