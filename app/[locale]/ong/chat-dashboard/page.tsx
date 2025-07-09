@@ -7,7 +7,9 @@ import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
 import { useAppSelector } from "@/app/hooks/hooks";
 import type { ConversationSummary } from "@/app/types/interfaces";
 import PrivateChatWindow from "@/app/components/features/chat/PrivateChatWindow";
+import { FiArrowLeft } from "react-icons/fi";
 
+// --- Funções Auxiliares (mantidas como no original) ---
 const formatRelativeTime = (dateString: string) => {
   const date = new Date(dateString);
   const now = new Date();
@@ -33,6 +35,7 @@ const Avatar = ({ name }: { name: string }) => {
     </div>
   );
 };
+// --- Fim das Funções Auxiliares ---
 
 export default function OngChatDashboard() {
   const router = useRouter();
@@ -70,9 +73,14 @@ export default function OngChatDashboard() {
 
   if (isAuthenticated && usuarioLogado?.cargos.includes("ROLE_ONG")) {
     return (
-      <main className="flex h-[calc(100vh-68px)]">
-        <div className="w-1/3 border-r border-gray-200 overflow-y-auto bg-white">
-          <div className="p-4 font-bold text-lg border-b bg-gray-50 sticky top-0">
+      <main className="flex flex-col md:flex-row h-[calc(100vh-68px)] bg-gray-100">
+        {/* --- COLUNA DA LISTA DE CONVERSAS (ESQUERDA) --- */}
+        <div
+          className={`${
+            selectedConversation ? "hidden" : "flex"
+          } md:flex flex-col w-full md:w-1/3 lg:w-1/4 border-r border-gray-200 overflow-y-auto bg-white`}
+        >
+          <div className="p-4 font-bold text-lg border-b bg-gray-50 sticky top-0 z-10">
             Conversas Ativas
           </div>
           {conversations?.map((convo) => (
@@ -104,20 +112,52 @@ export default function OngChatDashboard() {
               </div>
             </div>
           ))}
+          {conversations?.length === 0 && (
+            <div className="p-4 text-center text-gray-500">
+              Nenhuma conversa encontrada.
+            </div>
+          )}
         </div>
-        <div className="w-2/3 flex flex-col bg-gray-100">
+
+        {/* --- COLUNA DA JANELA DE CHAT (DIREITA) --- */}
+        <div
+          className={`${
+            selectedConversation ? "flex" : "hidden"
+          } md:flex flex-col flex-1 w-full md:w-2/3 lg:w-3/4`}
+        >
           {selectedConversation ? (
-            <PrivateChatWindow
-              conversationId={selectedConversation.conversationId}
-              chatPartnerName={selectedConversation.usuarioNome}
-              onClose={() => setSelectedConversation(null)}
-              showHeader={false}
-            />
+            <>
+              {/* Cabeçalho para a versão mobile (não cresce nem encolhe) */}
+              <div className="bg-purple-700 text-white p-4 flex justify-between items-center md:hidden flex-shrink-0">
+                <button
+                  onClick={() => setSelectedConversation(null)}
+                  className="mr-2"
+                >
+                  <FiArrowLeft size={24} />
+                </button>
+                <h3 className="font-bold text-lg truncate">
+                  {selectedConversation.usuarioNome}
+                </h3>
+                <div className="w-8"></div> {/* Espaçador */}
+              </div>
+
+              {/* Contêiner do chat que ocupa o espaço restante */}
+              <div className="flex-1 relative">
+                <div className="absolute inset-0">
+                  <PrivateChatWindow
+                    conversationId={selectedConversation.conversationId}
+                    chatPartnerName={selectedConversation.usuarioNome}
+                    onClose={() => setSelectedConversation(null)}
+                    showHeader={false}
+                  />
+                </div>
+              </div>
+            </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-center text-gray-500">
+            <div className="flex-1 items-center justify-center text-center text-gray-500 hidden md:flex">
               <div>
                 <p className="text-lg">Bem-vindo ao seu Dashboard de Chat.</p>
-                <p>Selecione uma conversa na lista à esquerda para começar.</p>
+                <p>Selecione uma conversa na lista para começar.</p>
               </div>
             </div>
           )}
