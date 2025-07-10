@@ -1,4 +1,4 @@
-import { baseApi } from "./petsApi"; // Importa a API base
+import { baseApi } from "./petsApi";
 import type { Usuario } from "@/app/types/interfaces";
 
 interface LoginRequest {
@@ -22,6 +22,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
+      invalidatesTags: ["Users"],
     }),
     register: builder.mutation<Usuario, RegisterRequest>({
       query: (userInfo) => ({
@@ -29,9 +30,11 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: userInfo,
       }),
+      invalidatesTags: ["Users"],
     }),
     getUsuarioLogado: builder.query<Usuario, void>({
       query: () => "auth/usuario-logado",
+      providesTags: ["Users"],
     }),
   }),
 });
