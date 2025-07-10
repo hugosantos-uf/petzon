@@ -33,27 +33,25 @@ export default function PetFormModal({ pet, onClose }: PetFormModalProps) {
   const [updatePet, { isLoading: isUpdating }] = useUpdatePetMutation();
 
   useEffect(() => {
-    if (isEditMode) {
-      reset(pet);
+    if (isEditMode && pet) {
+      const petDataForForm = { ...pet, idade: Number(pet.idade) };
+      reset(petDataForForm);
+    } else {
+      reset();
     }
   }, [pet, isEditMode, reset]);
 
   const onSubmit: SubmitHandler<PetFormInputs> = async (data) => {
     const formData = new FormData();
-    const petDto = {
-      tipo: data.tipo,
-      nome: data.nome,
-      temperamento: data.temperamento,
-      descricao: data.descricao,
-      idade: Number(data.idade),
-    };
-    formData.append(
-      "pet",
-      new Blob([JSON.stringify(petDto)], { type: "application/json" })
-    );
+
+    formData.append("nome", data.nome);
+    formData.append("tipo", data.tipo);
+    formData.append("temperamento", data.temperamento);
+    formData.append("idade", String(data.idade));
+    formData.append("descricao", data.descricao || "");
 
     if (data.imagem && data.imagem.length > 0) {
-      formData.append("imagem", data.imagem[0]);
+      formData.append("foto", data.imagem[0]);
     } else if (!isEditMode) {
       alert("Uma imagem é obrigatória para cadastrar um novo pet.");
       return;
@@ -61,6 +59,12 @@ export default function PetFormModal({ pet, onClose }: PetFormModalProps) {
 
     try {
       if (isEditMode && pet) {
+        if (!data.imagem || data.imagem.length === 0) {
+          alert(
+            "Para atualizar, por favor, selecione a imagem atual novamente ou uma nova imagem."
+          );
+          return;
+        }
         await updatePet({ id: pet.id, formData }).unwrap();
         alert("Pet atualizado com sucesso!");
       } else {
@@ -70,7 +74,9 @@ export default function PetFormModal({ pet, onClose }: PetFormModalProps) {
       onClose();
     } catch (err) {
       console.error("Falha ao salvar o pet:", err);
-      alert("Ocorreu um erro.");
+      alert(
+        "Ocorreu um erro ao salvar o pet. Verifique os dados e tente novamente."
+      );
     }
   };
 
@@ -188,7 +194,8 @@ export default function PetFormModal({ pet, onClose }: PetFormModalProps) {
             )}
             {isEditMode && (
               <p className="text-xs text-gray-500 mt-1">
-                Deixe em branco para manter a imagem atual.
+                Para atualizar, selecione a imagem novamente ou escolha uma
+                nova.
               </p>
             )}
           </div>
