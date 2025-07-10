@@ -3,7 +3,6 @@ import type { RootState } from "../store";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Page, Pet, PetCadastroDto } from "@/app/types/interfaces";
 
-// A API base é criada aqui, mas sem endpoints
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -22,6 +21,20 @@ export const petsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllPets: builder.query<Page<Pet>, { page: number; size: number }>({
       query: ({ page, size }) => `pets?page=${page}&size=${size}`,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.content.map(({ id }) => ({ type: "Pet" as const, id })),
+              { type: "Pet", id: "LIST" },
+            ]
+          : [{ type: "Pet", id: "LIST" }],
+    }),
+    getPetsByName: builder.query<
+      Page<Pet>,
+      { nome: string; page: number; size: number }
+    >({
+      query: ({ nome, page, size }) =>
+        `pets/nome?nome=${nome}&page=${page}&size=${size}`,
       providesTags: (result) =>
         result
           ? [
@@ -75,6 +88,7 @@ export const petsApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllPetsQuery,
+  useGetPetsByNameQuery,
   useGetPetsByTypeQuery,
   useGetPetByIdQuery,
   useAddPetMutation,

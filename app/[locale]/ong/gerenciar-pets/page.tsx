@@ -1,33 +1,46 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
 import {
   useGetAllPetsQuery,
+  useGetPetsByNameQuery,
   useDeletePetMutation,
 } from "@/app/store/api/petsApi";
 import { useGetUsuarioLogadoQuery } from "@/app/store/api/authApi";
 import { useAppSelector } from "@/app/hooks/hooks";
-import { FiEdit, FiTrash2, FiPlusCircle } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiPlusCircle, FiSearch } from "react-icons/fi";
 import { Pet } from "@/app/types/interfaces";
 import PetFormModal from "@/app/components/features/admin/PetFormModal";
+import { useDebounce } from "@/app/hooks/useDebounce";
 
 export default function GerenciarPetsPage() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPet, setEditingPet] = useState<Pet | null>(null);
+  const [page, setPage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const { data: usuarioLogado, isLoading: isLoadingUser } =
     useGetUsuarioLogadoQuery(undefined, { skip: !isAuthenticated });
 
-  const { data: petsData, isLoading: isLoadingPets } = useGetAllPetsQuery({
-    page: 0,
-    size: 100,
-  });
+  const useQueryResult =
+    debouncedSearchTerm.trim() !== ""
+      ? useGetPetsByNameQuery({
+          nome: debouncedSearchTerm,
+          page,
+          size: 10,
+        })
+      : useGetAllPetsQuery({ page, size: 10 });
+
+  const { data: petsData, isLoading: isLoadingPets } = useQueryResult;
   const [deletePet] = useDeletePetMutation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !isLoadingUser &&
       (!isAuthenticated || !usuarioLogado?.cargos.includes("ROLE_ONG"))
@@ -35,6 +48,11 @@ export default function GerenciarPetsPage() {
       router.replace("/");
     }
   }, [isAuthenticated, usuarioLogado, isLoadingUser, router]);
+
+  // Reseta a página para 0 sempre que a busca mudar
+  useEffect(() => {
+    setPage(0);
+  }, [debouncedSearchTerm]);
 
   const handleOpenModalToAdd = () => {
     setEditingPet(null);
@@ -51,47 +69,50 @@ export default function GerenciarPetsPage() {
       try {
         await deletePet(id).unwrap();
         alert("Pet excluído com sucesso!");
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
         alert("Falha ao excluir o pet.");
       }
     }
   };
 
-  if (isLoadingUser || isLoadingPets) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-700"></div>
-      </div>
-    );
-  }
+  const isLoading = isLoadingUser || isLoadingPets;
+  const totalPages = petsData?.totalPages || 0;
 
-  if (usuarioLogado?.cargos.includes("ROLE_ONG")) {
-    return (
-      <>
-        {isModalOpen && (
-          <PetFormModal
-            pet={editingPet}
-            onClose={() => setIsModalOpen(false)}
-          />
-        )}
+  return (
+    <>
+      {isModalOpen && (
+        <PetFormModal pet={editingPet} onClose={() => setIsModalOpen(false)} />
+      )}
 
-        <main className="flex-1 bg-gray-100 p-8">
-          <div className="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-md">
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-3xl font-bold text-purple-800">
-                Gerenciamento de Pets
-              </h1>
-              <button
-                onClick={handleOpenModalToAdd}
-                className="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-800 flex items-center gap-2"
-              >
-                <FiPlusCircle />
-                Adicionar Pet
-              </button>
+      <main className="flex-1 bg-gray-100 p-8">
+        <div className="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-md">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+            <h1 className="text-3xl font-bold text-purple-800">
+              Gerenciamento de Pets
+            </h1>
+            <div className="relative w-full sm:w-auto">
+              <input
+                type="text"
+                placeholder="Buscar por nome..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md w-full sm:w-64"
+              />
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             </div>
+            <button
+              onClick={handleOpenModalToAdd}
+              className="bg-purple-700 text-white px-4 py-2 rounded-md hover:bg-purple-800 flex items-center gap-2"
+            >
+              <FiPlusCircle />
+              Adicionar Pet
+            </button>
+          </div>
 
-            <div className="overflow-x-auto">
+          <div className="overflow-x-auto">
+            {isLoading ? (
+              <div className="text-center py-10">Carregando...</div>
+            ) : (
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -145,12 +166,31 @@ export default function GerenciarPetsPage() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            )}
           </div>
-        </main>
-      </>
-    );
-  }
-
-  return null;
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center mt-6 gap-4">
+              <button
+                onClick={() => setPage((p) => Math.max(p - 1, 0))}
+                disabled={page === 0 || isLoading}
+                className="px-4 py-2 bg-purple-700 text-white rounded-md disabled:bg-gray-400"
+              >
+                Anterior
+              </button>
+              <span className="text-purple-800 font-semibold">
+                Página {page + 1} de {totalPages}
+              </span>
+              <button
+                onClick={() => setPage((p) => p + 1)}
+                disabled={page + 1 >= totalPages || isLoading}
+                className="px-4 py-2 bg-purple-700 text-white rounded-md disabled:bg-gray-400"
+              >
+                Próxima
+              </button>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
+  );
 }
