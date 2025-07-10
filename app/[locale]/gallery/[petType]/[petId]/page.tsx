@@ -97,16 +97,24 @@ export default function PetDetailPage() {
 
       {isAuthenticated &&
         currentUser?.idUsuario !== pet.responsavel?.idUsuario && (
-          <div className="fixed bottom-6 right-6 z-50">
+          <div
+            className={`fixed z-50 transition-all duration-300 ease-in-out
+              ${
+                isChatOpen
+                  ? "inset-0 md:bottom-6 md:right-6 md:top-auto md:left-auto"
+                  : "bottom-6 right-6"
+              }
+            `}
+          >
             <div
-              className={`transition-all duration-300 ease-in-out ${
-                isChatOpen ? "w-96 h-[500px]" : "w-16 h-16"
-              }`}
+              className={`transition-all duration-300 ease-in-out h-full
+              ${isChatOpen ? "w-full md:w-96 md:h-[500px]" : "w-16 h-16"}
+            `}
             >
               {isChatOpen && conversationId ? (
                 <PrivateChatWindow
                   conversationId={conversationId}
-                  chatPartnerName="Responsável"
+                  chatPartnerName={pet.responsavel?.nome || "Responsável"}
                   onClose={() => setIsChatOpen(false)}
                 />
               ) : (
